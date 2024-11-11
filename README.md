@@ -1,0 +1,1 @@
+Service for users registration and authentication.

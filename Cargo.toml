@@ -1,0 +1,29 @@
+[package]
+name = "auth_sqlx"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+framework = { path = "framework" }
+axum = { version = "0.7.6", features = ["macros"] }
+chrono = { version = "0.4.38", features = ["serde"] }
+dotenvy = "0.15.7"
+dotenvy_macro = "0.15.7"
+rstest = "0.23.0"
+serde = { version = "1.0.210", features = ["derive"] }
+serde_json = "1.0.128"
+serde_with = { version = "3.9.0", features = ["time_0_3"] }
+serial_test = "3.1.1"
+sqlx = { version = "0.8", features = [ "runtime-tokio", "tls-native-tls", "postgres", "chrono", "uuid" ] }
+tokio = { version = "1.40.0", features = ["full"] }
+tower-http = { version = "0.6.1", features = ["cors"] }
+uuid = { version = "1.10.0", features = ["serde", "v4"] }
+jsonwebtoken = "9.3.0"
+once_cell = "1.20.2"
+utoipa-axum = "0.1.2"
+utoipa = { version = "5.2.0", features = ["chrono", "uuid", "axum_extras"] }
+utoipa-swagger-ui = { version = "8.0.3", features = ["axum", "reqwest"] }
+bcrypt = "0.15.1"
+
