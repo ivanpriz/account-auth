@@ -108,7 +108,7 @@ pub async fn create_router() -> Router {
         .routes(routes!(authenticate_user_handler))
         .with_state(Arc::new(RwLock::new(app_state)))
         .split_for_parts();
-    let router =
-        router.merge(SwaggerUi::new("/swagger-ui").url("/api-docs/openapi.json", api.clone()));
+    let router = router
+        .merge(SwaggerUi::new(&CONFIG.swagger_ui_path).url("/api-docs/openapi.json", api.clone()));
     router
 }

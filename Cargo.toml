@@ -26,4 +26,5 @@ utoipa-axum = "0.1.2"
 utoipa = { version = "5.2.0", features = ["chrono", "uuid", "axum_extras"] }
 utoipa-swagger-ui = { version = "8.0.3", features = ["axum", "reqwest"] }
 bcrypt = "0.15.1"
+rdkafka = { version = "0.25", features = ["cmake-build"] }
 

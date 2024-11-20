@@ -1,7 +1,7 @@
 use std::future::Future;
 
-use super::super::specifications::SpecificationT;
 use super::unit_of_work::UnitOfWorkT;
+use crate::application::specifications::SpecificationT;
 
 pub trait RepositoryT<Entity, SpecificationType: SpecificationT, UnitOfWorkType: UnitOfWorkT>:
     Send + Sync + 'static

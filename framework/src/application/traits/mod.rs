@@ -1,7 +1,5 @@
-mod repository;
-mod unit_of_work;
-mod unit_of_work_factory;
+pub mod communication;
+pub mod data;
 
-pub use repository::RepositoryT;
-pub use unit_of_work::UnitOfWorkT;
-pub use unit_of_work_factory::UnitOfWorkFactoryT;
+pub use communication::TopicsManagerT;
+pub use data::{RepositoryT, UnitOfWorkFactoryT, UnitOfWorkT};
