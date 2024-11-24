@@ -14,11 +14,11 @@ impl<'tr> RepositoryT<User, UsersSpecification, UnitOfWork<'tr>> for UsersReposi
             None => sqlx::query_as!(
                 User,
                 r#"
-                INSERT INTO users(email, hashed_password)
+                INSERT INTO users(username, hashed_password)
                 VALUES ($1, $2)
-                RETURNING id, email, hashed_password
+                RETURNING id, username, hashed_password
             "#,
-                entity.email,
+                entity.username,
                 entity.hashed_password,
             )
             .fetch_one(&mut **tx)
@@ -27,19 +27,13 @@ impl<'tr> RepositoryT<User, UsersSpecification, UnitOfWork<'tr>> for UsersReposi
             Some(id) => sqlx::query_as!(
                 User,
                 r#"
-                INSERT INTO users(id, email, hashed_password)
+                INSERT INTO users(id, username, hashed_password)
                 VALUES ($1, $2, $3)
-                RETURNING id, email, hashed_password
+                RETURNING id, username, hashed_password
             "#,
                 id,
-                entity.email,
+                entity.username,
                 entity.hashed_password,
-                // entity.first_name,
-                // entity.last_name,
-                // entity.birth_date,
-                // entity.gender_is_male,
-                // entity.interests,
-                // entity.city
             )
             .fetch_one(&mut **tx)
             .await
@@ -58,7 +52,7 @@ impl<'tr> RepositoryT<User, UsersSpecification, UnitOfWork<'tr>> for UsersReposi
             UsersSpecification::Id(CompType::Equals(user_id)) => sqlx::query_as!(
                 User,
                 r#"
-                    SELECT id, email, hashed_password
+                    SELECT id, username, hashed_password
                     FROM users
                     WHERE users.id = $1
                 "#,
@@ -67,14 +61,14 @@ impl<'tr> RepositoryT<User, UsersSpecification, UnitOfWork<'tr>> for UsersReposi
             .fetch_optional(&mut **tx)
             .await
             .expect("Couldn't query user"),
-            UsersSpecification::Email(CompType::Equals(user_email)) => sqlx::query_as!(
+            UsersSpecification::Username(CompType::Equals(username)) => sqlx::query_as!(
                 User,
                 r#"
-                    SELECT id, email, hashed_password
+                    SELECT id, username, hashed_password
                     FROM users
-                    WHERE users.email = $1
+                    WHERE users.username = $1
                 "#,
-                user_email
+                username,
             )
             .fetch_optional(&mut **tx)
             .await
@@ -120,7 +114,7 @@ mod tests {
         let users_repo = UsersRepository {};
         runtime.block_on(uow.begin());
         let user = runtime.block_on(users_repo.get_one_by(
-            UsersSpecification::Email(CompType::Equals(String::from("nonexistingmail"))),
+            UsersSpecification::Username(CompType::Equals(String::from("nonexistingmail"))),
             &mut uow,
         ));
         runtime.block_on(uow.rollback());
@@ -145,7 +139,7 @@ mod tests {
             let users_repo = UsersRepository {};
             runtime.block_on(uow.begin());
             let user_from_repo = runtime.block_on(users_repo.get_one_by(
-                UsersSpecification::Email(CompType::Equals(user.email.clone())),
+                UsersSpecification::Username(CompType::Equals(user.username.clone())),
                 &mut uow,
             ));
             // println!("User we got from repo: {:?}", user_from_repo);

@@ -25,7 +25,7 @@ pub async fn get_user_query<UnitOfWorkType: UnitOfWorkT>(
     match user {
         Some(user) => Ok(Some(UserOutDTO {
             id: user.id,
-            email: user.email,
+            username: user.username,
         })),
         None => Ok(None),
     }

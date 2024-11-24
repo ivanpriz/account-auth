@@ -17,7 +17,7 @@ pub fn default_users() -> HashMap<Uuid, User> {
         id1,
         User {
             id: Some(id1),
-            email: String::from("mail@mail.com"),
+            username: String::from("mail@mail.com"),
             hashed_password: String::from("hashed_pwd"),
         },
     )])
@@ -36,12 +36,12 @@ pub fn existing_users(
             .block_on(
                 sqlx::query!(
                     r#"
-                    INSERT INTO users(id, email, hashed_password)
+                    INSERT INTO users(id, username, hashed_password)
                     VALUES ($1, $2, $3)
-                    RETURNING id, email, hashed_password
+                    RETURNING id, username, hashed_password
                 "#,
                     user.id,
-                    user.email,
+                    user.username,
                     user.hashed_password,
                 )
                 .fetch_one(&pool),

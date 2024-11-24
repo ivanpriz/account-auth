@@ -24,7 +24,7 @@ pub async fn authenticate_user_command<UnitOfWorkType: UnitOfWorkT>(
 
     let user = users_repository
         .get_one_by(
-            UsersSpecification::Email(CompType::Equals(sign_in_data.email.clone())),
+            UsersSpecification::Username(CompType::Equals(sign_in_data.username.clone())),
             &mut uow,
         )
         .await;
@@ -36,7 +36,7 @@ pub async fn authenticate_user_command<UnitOfWorkType: UnitOfWorkT>(
                 return Err(AuthError::PasswordIncorrect);
             }
 
-            Ok(encode_jwt(&user.email).unwrap())
+            Ok(encode_jwt(&user.username).unwrap())
         }
     };
 

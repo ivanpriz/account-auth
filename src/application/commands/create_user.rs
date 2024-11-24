@@ -16,7 +16,7 @@ pub async fn create_user_command<UnitOfWorkType: UnitOfWorkT>(
         .create(
             &User {
                 id: None,
-                email: user_create_data.email,
+                username: user_create_data.username,
                 hashed_password: hash_pwd(&user_create_data.password),
             },
             &mut uow,
@@ -26,6 +26,6 @@ pub async fn create_user_command<UnitOfWorkType: UnitOfWorkT>(
     uow.commit().await;
     Ok(UserOutDTO {
         id: user.id,
-        email: user.email,
+        username: user.username,
     })
 }

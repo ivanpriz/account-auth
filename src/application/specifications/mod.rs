@@ -3,7 +3,7 @@ use uuid::Uuid;
 
 pub enum UsersSpecification {
     Id(CompType<Uuid>),
-    Email(CompType<String>),
+    Username(CompType<String>),
 }
 
 impl SpecificationT for UsersSpecification {}
